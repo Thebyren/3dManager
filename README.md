@@ -17,8 +17,4 @@ CREATE TABLE ModelData (
     data LONGBLOB,
     FOREIGN KEY (model_id) REFERENCES ModelMetadata(id)
 );
-
-select * from modelmetadata;
-select * from modeldata;
-
 ```
