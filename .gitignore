@@ -1,0 +1,43 @@
+# Ignorar todas las carpetas bin y obj en cualquier nivel
+**/bin/
+**/obj/
+
+# Ignorar archivos de configuración de usuario de Visual Studio
+*.user
+*.suo
+
+# Ignorar archivos de construcción de VS Code
+.vscode/
+
+# Ignorar archivos de configuración de construcción de Visual Studio
+.vs/
+.vscode/
+
+# Ignorar directorios de paquetes NuGet
+packages/
+*.nupkg
+# Monorepo dependencies
+**/node_modules
+
+# Ignorar directorios de salida de compilación de MSBuild
+[Oo]bj/
+[Bb]in/
+
+# Ignorar archivos de configuración de paquetes
+.nuget/
+
+# Ignorar archivos de registro
+*.log
+
+# Ignorar archivos temporales
+*.tmp
+*.temp
+~$*
+
+# Ignorar archivos de lock
+*.lock
+
+# Ignorar archivos de configuración de seguridad
+*.pfx
+*.key
+
