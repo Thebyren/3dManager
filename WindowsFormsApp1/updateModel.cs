@@ -18,7 +18,8 @@ namespace WindowsFormsApp1
             UpdatedModelData = modelo;
             FillData(modelo);
         }
-        public void readData() {
+        public void readData()
+        {
             UpdatedModelData.Name = name.Text;
             UpdatedModelData.Description = description.Text;
             UpdatedModelData.Date = date.Value;
@@ -46,7 +47,7 @@ namespace WindowsFormsApp1
 
                 filePath = openFileDialog.FileName;
 
-                
+
                 UpdatedModelData.Ext = Path.GetExtension(filePath);
                 UpdatedModelData.DataBytes = Core.ReadFile(filePath);
                 UpdatedModelData.Size = ByteConverter.ConvertBytesToReadableSize(UpdatedModelData.DataBytes.Length);
@@ -78,7 +79,11 @@ namespace WindowsFormsApp1
 
         private void InsertButton_Click(object sender, EventArgs e)
         {
-            DatabaseManager manager = new DatabaseManager("localhost", "db_3d_models", "root", "pass");
+            DatabaseManager manager = new DatabaseManager(
+                DatabaseManager.ConnectionStringUser[0],
+                DatabaseManager.ConnectionStringUser[1],
+                DatabaseManager.ConnectionStringUser[2],
+                DatabaseManager.ConnectionStringUser[3]);
             readData();
             manager.UpdateModel(UpdatedModelData);
             this.Close();

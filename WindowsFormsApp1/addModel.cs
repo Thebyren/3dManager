@@ -25,11 +25,15 @@ namespace WindowsFormsApp1
         private void Button1_Click(object sender, EventArgs e)
         {
 
-            DatabaseManager dbManager = new DatabaseManager("localhost", "db_3d_models", "root", "pass");
-            if(DataModel != null)
+            DatabaseManager dbManager = new DatabaseManager(
+                DatabaseManager.ConnectionStringUser[0],
+                DatabaseManager.ConnectionStringUser[1],
+                DatabaseManager.ConnectionStringUser[2],
+                DatabaseManager.ConnectionStringUser[3]);
+            if (DataModel != null)
             {
-            dbManager.InsertModelData(DataModel.Name, DataModel.Description, DataModel.Ext, DataModel.Size, DataModel.DataBytes);
-            this.DialogResult = DialogResult.OK;
+                dbManager.InsertModelData(DataModel.Name, DataModel.Description, DataModel.Ext, DataModel.Size, DataModel.DataBytes);
+                this.DialogResult = DialogResult.OK;
             }
             this.Close();
         }
@@ -69,7 +73,7 @@ namespace WindowsFormsApp1
                         throw new NotSupportedException("tipo de archivo no soportado.");
                 }
 
-                if(currentModel is null)
+                if (currentModel is null)
                 {
                     this.Close();
                 }

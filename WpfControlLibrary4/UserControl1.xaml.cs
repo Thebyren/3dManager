@@ -1,5 +1,4 @@
 ﻿using HelixToolkit.Wpf;
-using System;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,12 +7,12 @@ namespace WpfControlLibrary4
 {
     public partial class UserControl1 : UserControl
     {
-        string fullPath="";
+        string fullPath = "";
 
         public UserControl1()
         {
             InitializeComponent();
-            fullPath="../../../WpfControlLibrary4/assets/cube.obj" ;
+            fullPath = "../../../WpfControlLibrary4/assets/cube.obj";
         }
         public void Load3dModel(Model3DGroup model3d)
         {

@@ -24,7 +24,12 @@ namespace WindowsFormsApp1
 
         private void UpdateGrid()
         {
-            datamanager = new DatabaseManager("localhost", "db_3d_models", "root", "MEGAyol0.");
+            datamanager = new DatabaseManager(
+                DatabaseManager.ConnectionStringUser[0],
+                DatabaseManager.ConnectionStringUser[1],
+                DatabaseManager.ConnectionStringUser[2],
+                DatabaseManager.ConnectionStringUser[3]
+                );
             datamanager.PopulateDataGridView(DataGridView);
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -32,7 +37,7 @@ namespace WindowsFormsApp1
 
             UpdateGrid();
         }
-        private void restartData()
+        private void RestartData()
         {
             NameModel.Clear();
             extModel.Clear();
@@ -41,7 +46,7 @@ namespace WindowsFormsApp1
             SizeModel.Clear();
             userControl11.ChangeModel(null);
         }
-       
+
         private void UpdateCurrentDataModel(Models currentModel)
         {
             NameModel.Text = currentModel.Name;
@@ -53,11 +58,20 @@ namespace WindowsFormsApp1
         }
         private void UpdateModel_Click(object sender, EventArgs e)
         {
-            UpdateModel form = new UpdateModel(currentModel);
-            form.ShowDialog();
-            currentModel = datamanager.GetModelById(int.Parse(SearchText.Text));
-            UpdateCurrentDataModel(currentModel);
-            UpdateGrid();
+            if (currentModel is null)
+            {
+                MessageBox.Show("Por favor, ingrese un ID válido.", "ID no válido",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RestartData();
+            }
+            else
+            {
+                UpdateModel form = new UpdateModel(currentModel);
+                form.ShowDialog();
+                currentModel = datamanager.GetModelById(int.Parse(SearchText.Text));
+                UpdateCurrentDataModel(currentModel);
+                UpdateGrid();
+            }
         }
 
         private void InsertModel_Click(object sender, EventArgs e)
@@ -72,7 +86,11 @@ namespace WindowsFormsApp1
 
         private void SaveModel_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Desea guardar el archivo?", "Guardar Archivo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(
+                "¿Desea guardar el archivo?", 
+                "Guardar Archivo", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
 
             // Si el usuario selecciona "Sí"
             if (result == DialogResult.Yes)
@@ -94,7 +112,11 @@ namespace WindowsFormsApp1
                         File.WriteAllBytes(filePath, currentModel.DataBytes);
                     }
 
-                    MessageBox.Show("Archivo guardado en: " + filePath, "Archivo Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "Archivo guardado en: " + filePath, 
+                        "Archivo Guardado", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Information);
                 }
             }
         }
@@ -103,9 +125,22 @@ namespace WindowsFormsApp1
             switch (Filters.SelectedIndex)
             {
                 case 0:
+
                     currentModel = datamanager.GetModelById(int.Parse(SearchText.Text));
-                    currentModel.id = int.Parse(SearchText.Text);
-                    UpdateCurrentDataModel(currentModel);
+                    if (currentModel is null)
+                    {
+                        MessageBox.Show(
+                            "Por favor, ingrese un ID válido.", 
+                            "ID no válido",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        RestartData();
+                    }
+                    else
+                    {
+                        currentModel.id = int.Parse(SearchText.Text);
+                        UpdateCurrentDataModel(currentModel);
+                    }
+
                     ; break;
                 case 1:
 
@@ -119,11 +154,19 @@ namespace WindowsFormsApp1
         {
             if (Filters.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor, seleccione un filtro.", "Filtro no válido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Por favor, seleccione un filtro.", 
+                    "Filtro no válido", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult result = MessageBox.Show("¿Está seguro de que desea borrar el modelo?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(
+                "¿Está seguro de que desea borrar el modelo?", 
+                "Confirmar eliminación", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -133,24 +176,40 @@ namespace WindowsFormsApp1
                         if (int.TryParse(SearchText.Text, out int id))
                         {
                             datamanager.DeleteModelById(id);
-                            MessageBox.Show("Modelo borrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show(
+                                "Modelo borrado exitosamente.", 
+                                "Éxito", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Por favor, ingrese un ID válido.", "ID no válido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(
+                                "Por favor, ingrese un ID válido.",
+                                "ID no válido", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Warning);
                         }
                         break;
 
                     case 1:
                         datamanager.DeleteModelByName(SearchText.Text);
-                        MessageBox.Show("Modelo borrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(
+                            "Modelo borrado exitosamente.", 
+                            "Éxito", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information);
                         break;
 
                     default:
-                        MessageBox.Show("El filtro seleccionado no es válido.", "Filtro no válido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(
+                            "El filtro seleccionado no es válido.", 
+                            "Filtro no válido", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Warning);
                         break;
                 }
-                restartData();
+                RestartData();
                 UpdateGrid();
             }
         }
