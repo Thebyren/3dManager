@@ -3,11 +3,17 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using WindowsFormsApp1.manager;
+
 namespace WindowsFormsApp1.data
 {
-
     public class DatabaseManager
     {
+        public static readonly string[] ConnectionStringUser = {
+            "localhost",
+            "db_3d_models",
+            "root",
+            "MEGAyol0."
+        };
         private readonly string connectionString;
 
         public DatabaseManager(string server, string database, string username, string password)
