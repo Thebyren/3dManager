@@ -12,7 +12,7 @@ namespace WindowsFormsApp1.data
             "localhost",
             "db_3d_models",
             "root",
-            "MEGAyol0."
+            "password"
         };
         private readonly string connectionString;
 
