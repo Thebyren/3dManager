@@ -1,5 +1,8 @@
 # 3dManager
+![a](./Captura.PNG) 
+
 es un programa escrito en c# que nos permite almacenar modelos 3d en una base de datos
+
 1. [instalacion](#instalacion)
 2. [modo de uso](#uso)
 3. [caracteristicas](#caracteristicas)
